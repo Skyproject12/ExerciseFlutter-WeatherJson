@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_flutter/bloc/WeatherBloc.dart';
+import 'package:weather_flutter/bloc/Theme/ThemeBloc.dart';
+import 'package:weather_flutter/bloc/Theme/ThemeState.dart';
 import 'package:weather_flutter/config/WeatherApiClient.dart';
 import 'package:weather_flutter/repositori/Repository.dart';
 import 'package:weather_flutter/simple_bloc_delegate.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather_flutter/widget/Weather.dart';
+
+import 'bloc/Setting/SettingBloc.dart';
+import 'bloc/Weather/WeatherBloc.dart';
 
 void main() {
   // call simple bloc delegate
@@ -15,7 +19,19 @@ void main() {
       weatherApiClient: WeatherApiClient(
     httpClient: http.Client(),
   ));
-  runApp(App(weatherRepository: weatherRepository));
+  runApp( 
+    MultiBlocProvider( 
+      providers: [ 
+        BlocProvider<ThemeBloc>( 
+          create: (context) => ThemeBloc(),
+        ), 
+        BlocProvider<SettingBloc>( 
+          create: (context) => SettingBloc(),
+        )
+      ], 
+      child: App(weatherRepository: weatherRepository)
+    )
+  );
 }
 
 class App extends StatelessWidget {
@@ -26,14 +42,21 @@ class App extends StatelessWidget {
         super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Weather',  
-      // defination bloc provider
-      home: BlocProvider( 
-        create: (context) => WeatherBloc(weatherRepository: weatherRepository), 
-        // set weather  
-        child: Weather(),
-      ),
+    return BlocBuilder<ThemeBloc, ThemeState>(
+      builder: (context, themeState) {
+        return MaterialApp(
+          title: 'Flutter Weather',
+          // defination bloc provider
+          home: BlocProvider( 
+            // initial global bloc
+            create: (context) => 
+            // this can use any page because bloc global 
+                WeatherBloc(weatherRepository: weatherRepository),
+            // set weather
+            child: Weather(),
+          ),
+        );
+      },
     );
   }
 }

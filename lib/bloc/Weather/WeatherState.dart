@@ -17,7 +17,7 @@ class WeatherLoaded extends WeatherState{
   final Weather weather; 
   const WeatherLoaded({@required this.weather}) : assert(weather!= null); 
   @override  
-  List<Object> get props => [weather];
+  List<Object> get props => [weather]; 
 }
 
 class WeatherError extends WeatherState{ 

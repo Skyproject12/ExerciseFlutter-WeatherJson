@@ -12,3 +12,15 @@ class FetchWeather extends WeatherEvent {
   @override
   List<Object> get props => [city];
 }
+
+// refresh the city 
+class RefreshWeather extends WeatherEvent{
+  final String city; 
+  const  RefreshWeather({ 
+    @required this.city
+  }) : assert(city!=null); 
+  // return list of city  
+  @override
+  List<Object> get props => [city]; 
+
+}
