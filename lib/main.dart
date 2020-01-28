@@ -7,8 +7,6 @@ import 'package:weather_flutter/repositori/Repository.dart';
 import 'package:weather_flutter/simple_bloc_delegate.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather_flutter/widget/Weather.dart';
-
-import 'bloc/Setting/SettingBloc.dart';
 import 'bloc/Weather/WeatherBloc.dart';
 
 void main() {
@@ -25,9 +23,6 @@ void main() {
         BlocProvider<ThemeBloc>( 
           create: (context) => ThemeBloc(),
         ), 
-        BlocProvider<SettingBloc>( 
-          create: (context) => SettingBloc(),
-        )
       ], 
       child: App(weatherRepository: weatherRepository)
     )

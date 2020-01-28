@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:weather_flutter/bloc/Setting/SettingState.dart';
 
 class Temperature extends StatelessWidget {
   final double temperature;
   final double low;
   final double high;
-  final TemperatureUnits unit;
 
 // get temp the data from CombineWeatherTemperature
-  Temperature({Key key, this.temperature, this.low, this.high, this.unit})
+  Temperature({Key key, this.temperature, this.low, this.high})
       : super(key: key);
 
   @override
@@ -48,6 +46,5 @@ class Temperature extends StatelessWidget {
 
   int _toFahrenheit(double celsius) => ((celsius * 9 / 5) + 32).round();
   // membualatkan suatu bilangan
-  int _formattedTemperature(double t) =>
-      unit == TemperatureUnits.fahrenheit ? _toFahrenheit(t) : t.round();
+  int _formattedTemperature(double t) => t.round();
 }
